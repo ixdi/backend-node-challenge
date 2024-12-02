@@ -1,10 +1,12 @@
 # Backend Challenger
 
+> :warning: !! NOT READY YET, DEPLOY IS NOT DONE !!
+
 ## Description
 
-Given the instructions in the [challenge](./challenge.md).
+Given the instructions in the [challenge](./challenge.md)
 
-Code based on the template from CodelyTv for the DDD.
+The code is based on the template from CodelyTv for the DDD.
 
 ## Setup
 
@@ -20,6 +22,13 @@ Start localy the backend server:
 pnpm dev
 ```
 
+Test the backend server:
+
+```bash
+pnpm test
+pnpm test:e2e
+```
+
 Deploy the backend server using serverless framework:
 
 ```bash
@@ -31,12 +40,11 @@ pnpm deploy
 The solution is writen in Typescript using
 
 - Node.js
-- Database: MongoDB
-- Authentication: JWT
+- Database: MongoDB in Atlas
 - Testing: Vitest
 - E2E Testing: Playwright
 
-## Architecture
+## Code Architecture
 
 The architecture has the following structure:
 
@@ -46,6 +54,12 @@ The architecture has the following structure:
 - design/ - Contains the system requirements and design
 - .husky/ - Contains the restrictions for the git
 - .github: Contains the Github workflows
+
+### Design
+
+- [User Stories](./design/UserStories.md)
+- [Use Cases](./design/UseCases.md)
+- [Database](./design/Database.md)
 
 ### Backend
 
@@ -64,7 +78,7 @@ Using the DDD pattern with the following folder structure:
 
 ### Improvements
 
-- Add more fields for the Customer like address, phone, dni, etc.
+- Add more fields to the Customer collection like address, phone, dni, etc.
 - Add a User collection with authentication and authorization attached to the customer
 - Use Database transactions (code is ready) for the repositories operations when necessary
 - Add event buses and domain events
