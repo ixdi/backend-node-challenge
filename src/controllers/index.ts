@@ -5,6 +5,7 @@ const routes = [
   './customer/commands/create.route.ts',
   './customer/commands/update.route.ts',
   './customer/commands/delete.route.ts',
+  './customer/commands/addCredit.route.ts',
   './customer/queries/searchById.route.ts',
   './customer/queries/searchByCredit.route.ts',
 ];
