@@ -11,7 +11,7 @@ export class CustomerUpdate {
     const searchCriteria = new Criteria(
       {
         filter: { customerId: params.customerId },
-        options: { limit: 1 }
+        limit: 1
       }
     );
     const customerPrimitives: Primitives<Customer>[] = await this.repository.search(searchCriteria);
