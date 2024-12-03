@@ -16,8 +16,8 @@ const customerUpdateSchema = z.object({
 class PostCustomerUpdateController implements Controller {
   async run(req: Request, res: Response) {
     // 1. Validate data
-    const { customerId, name, credit } = req.body;
-    const validation = customerUpdateSchema.safeParse({ customerId, name, credit });
+    const { customerId, ...data } = req.body;
+    const validation = customerUpdateSchema.safeParse({ customerId, ...data });
     if (!validation.success) {
       res.status(httpStatus.BAD_REQUEST).send(validation.error);
       return;
@@ -29,14 +29,9 @@ class PostCustomerUpdateController implements Controller {
     const customerRepository = new MongoCustomerRepository(connection);
     // 3. Run use case
     const customerUpdate = new CustomerUpdate(customerRepository);
-    customerUpdate.run({
-      customerId,
-    }, {
-      name,
-      credit,
-    });
+    await customerUpdate.run({ customerId }, data);
     // 4. Return
-    res.status(httpStatus.OK).send({});
+    res.status(httpStatus.OK).json({});
   }
 }
 

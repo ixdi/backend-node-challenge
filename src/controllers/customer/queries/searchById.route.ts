@@ -27,13 +27,17 @@ class GetCustomerSearchByIdController implements Controller {
     const customerRepository = new MongoCustomerRepository(connection);
     // 3. Run use case
     const customerSearchById = new CustomerSearchById(customerRepository);
-    const customerPrimitives = customerSearchById.run({
+    const customerPrimitives = await customerSearchById.run({
       customerId,
     });
+    if (!customerPrimitives.length) {
+      res.status(httpStatus.NOT_FOUND).send();
+      return
+    }
     // 4. Return
-    res.status(httpStatus.OK).send({
-      customer: customerPrimitives,
-    });
+    res.status(httpStatus.OK).json(
+      customerPrimitives[0],
+    );
   }
 }
 

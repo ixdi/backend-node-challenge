@@ -31,13 +31,13 @@ class PostCustomerCreateController implements Controller {
     // 3. Run use case
     const customerCreate = new CustomerCreate(customerRepository);
     const customerId = CustomerId.random().value;
-    customerCreate.run({
+    await customerCreate.run({
       customerId,
       name,
       credit,
     });
     // 4. Return customerId
-    res.status(httpStatus.OK).send({
+    res.status(httpStatus.OK).json({
       customerId,
     });
   }

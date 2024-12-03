@@ -26,9 +26,9 @@ class GetCustomerSearchByCreditController implements Controller {
     const customerRepository = new MongoCustomerRepository(connection);
     // 3. Run use case
     const customerSearchByCredit = new CustomerSearchByCredit(customerRepository);
-    const customersPrimitives = customerSearchByCredit.run();
+    const customersPrimitives = await customerSearchByCredit.run();
     // 4. Return
-    res.status(httpStatus.OK).send({
+    res.status(httpStatus.OK).json({
       customers: customersPrimitives,
     });
   }

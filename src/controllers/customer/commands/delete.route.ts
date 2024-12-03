@@ -27,11 +27,11 @@ class PostCustomerDeleteController implements Controller {
     const customerRepository = new MongoCustomerRepository(connection);
     // 3. Run use case
     const customerDelete = new CustomerDelete(customerRepository);
-    customerDelete.run({
+    await customerDelete.run({
       customerId,
     });
     // 4. Return
-    res.status(httpStatus.OK).send({});
+    res.status(httpStatus.OK).json({});
   }
 }
 
