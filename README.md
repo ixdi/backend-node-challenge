@@ -57,9 +57,10 @@ The architecture has the following structure:
 
 ### Design
 
-- [User Stories](./design/UserStories.md)
-- [Use Cases](./design/UseCases.md)
-- [Database](./design/Database.md)
+- [design/UserStories](./design/UserStories.md)
+- [design/UseCases](./design/UseCases.md)
+- [design/Database](./design/Database.md)
+- [design/API](./design/API.md)
 
 ### Backend
 
