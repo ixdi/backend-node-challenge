@@ -9,6 +9,7 @@
     "deploy": "serverless deploy",
     "lint": "lint",
     "test": "vitest",
+    "test:single": "vitest run",
     "test:e2e": "playwright test",
     "test:e2e:report": "playwright show-report",
     "check-types": "tsc --noEmit",
