@@ -28,12 +28,12 @@ class PostCustomerAddCreditController implements Controller {
     const customerRepository = new MongoCustomerRepository(connection);
     // 3. Run use case
     const customerAddCredit = new CustomerAddCredit(customerRepository);
-    customerAddCredit.run({
+    await customerAddCredit.run({
       customerId,
       creditToAdd,
     });
     // 4. Return
-    res.status(httpStatus.OK).send({});
+    res.status(httpStatus.OK).json({});
   }
 }
 
