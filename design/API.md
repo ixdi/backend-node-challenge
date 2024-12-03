@@ -21,6 +21,16 @@
 }
 ```
 
+Response:
+
+```json
+{
+  "customerId": uuid,
+  "name": string,
+  "credit": number,
+}
+```
+
 ## Update a customer
 
 `POST /v1/customer/update`
@@ -60,5 +70,19 @@
 
 ```json
 {
+}
+```
+
+Response:
+
+```json
+{
+  "customers": [
+    {
+      "customerId": uuid,
+      "name": string,
+      "credit": number,
+    }
+  ]
 }
 ```
