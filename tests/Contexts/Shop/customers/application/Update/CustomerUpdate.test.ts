@@ -31,7 +31,7 @@ describe('CustomerUpdate', () => {
     // Mock repository and Customer.create behavior
     repositoryMock.search.mockResolvedValue([mockCustomerPrimitives]);
     const mockCustomer = {
-      customerId: { value: mockCustomerPrimitives.customerId },
+      customerId: { value: params.customerId },
       name: faker.internet.username(),
       credit: mockCustomerPrimitives.credit,
     };
@@ -40,7 +40,7 @@ describe('CustomerUpdate', () => {
     await customerUpdate.run(params, data);
 
     expect(repositoryMock.search).toHaveBeenCalledWith(
-      new Criteria({ filter: { customerId: params.customerId } })
+      new Criteria({ filter: { customerId: params.customerId }, limit: 1 })
     );
     expect(Customer.create).toHaveBeenCalledWith({ ...mockCustomerPrimitives, ...data });
     expect(repositoryMock.save).toHaveBeenCalledWith(
@@ -65,7 +65,7 @@ describe('CustomerUpdate', () => {
     await expect(customerUpdate.run(params, data)).rejects.toThrow("Customer doesn't exists");
 
     expect(repositoryMock.search).toHaveBeenCalledWith(
-      new Criteria({ filter: { customerId: params.customerId } })
+      new Criteria({ filter: { customerId: params.customerId }, limit: 1 })
     );
     expect(repositoryMock.save).not.toHaveBeenCalled();
   });
