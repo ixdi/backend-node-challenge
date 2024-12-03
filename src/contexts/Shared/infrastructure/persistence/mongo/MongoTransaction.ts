@@ -8,25 +8,15 @@ import { ClientSession, MongoClient, TransactionOptions } from 'mongodb';
  * @throws new Error from the passed string or error.message
  * @returns {never}
  */
-const RESET = '\x1b[0m';
-const BRIGHT = '\x1b[1m';
-const RED = '\x1b[31m';
 
 export function handleError(err: Error | unknown): never {
   if (typeof err === 'string') {
-    const error = new Error(RED + BRIGHT + 'ERROR Mongo Transaction: ' + err + RESET);
-    if (process.env.NODE_ENV !== 'production') {
-      console.trace();
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      error.stack;
-    }
-    throw error;
+    throw new Error('ERROR Mongo Transaction: ' + err);
   }
   if (err instanceof Error) {
     throw new Error('ERROR Mongo Transaction: ' + err.message);
   }
-  throw new Error('Invalid handleError received parameters');
+  throw new Error('Fatal error');
 }
 
 export class MongoTransaction implements DBTransaction {
@@ -70,8 +60,12 @@ export class MongoTransaction implements DBTransaction {
     if (!this.session) {
       throw new Error('Session is not defined');
     }
-    await this.session.abortTransaction().catch(handleError);
-    await this.stopSession().catch(handleError);
+    try {
+      await this.session.abortTransaction()
+      await this.stopSession()
+    } catch (err) {
+      handleError(err)
+    }
   }
 
   /**
@@ -88,11 +82,15 @@ export class MongoTransaction implements DBTransaction {
     }
     const session = this.session;
     await this.session
-      ?.commitTransaction()
+      .commitTransaction()
       .then(async () => {
         if (session.transaction.isCommitted) {
           console.log('Transaction successfully committed.', session.transaction.isCommitted);
-          await this.stopSession().catch(handleError);
+          try {
+            await this.stopSession()
+          } catch (err) {
+            handleError(err)
+          }
         }
       })
       .catch(async (error) => {
@@ -103,7 +101,7 @@ export class MongoTransaction implements DBTransaction {
           await session?.commitTransaction();
         } else {
           console.log(`An error occurred in the transaction, performing a data rollback:${error}`);
-          await this.abortTransaction().catch(handleError);
+          await this.abortTransaction()
           handleError(error);
         }
       });
