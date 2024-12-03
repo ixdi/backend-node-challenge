@@ -8,7 +8,12 @@ export class CustomerUpdate {
   constructor(private repository: CustomerRepository) { }
 
   async run(params: { customerId: string }, data: Partial<Primitives<Customer>>, transactionSession?: TransactionSession): Promise<void> {
-    const searchCriteria = new Criteria({ filter: { customerId: params.customerId } });
+    const searchCriteria = new Criteria(
+      {
+        filter: { customerId: params.customerId },
+        options: { limit: 1 }
+      }
+    );
     const customerPrimitives: Primitives<Customer>[] = await this.repository.search(searchCriteria);
     if (customerPrimitives.length > 0) {
       const customer = Customer.create({ ...customerPrimitives[0], ...data });
