@@ -3,6 +3,7 @@ import { CustomerAddCredit } from '@Shop/customers/application/AddCredit/Custome
 import { CustomerRepository } from '@Shop/customers/domain/CustomerRepository';
 import { Customer } from '@Shop/customers/domain/Customer';
 import { Criteria } from '@Shared/domain/Criteria';
+import { faker } from '@faker-js/faker';
 
 vi.mock('@Shared/customers/domain/Customer');
 vi.mock('@Shared/domain/Criteria');
@@ -22,10 +23,10 @@ describe('CustomerAddCredit', () => {
 
   it('should add credit to an existing customer', async () => {
     const mockCustomerPrimitives = {
-      id: '123e4567-e89b-12d3-a456-426614174000',
-      customerId: 'customer-id-1',
-      name: 'Maria',
-      credit: 100,
+      id: faker.string.uuid(),
+      customerId: faker.string.uuid(),
+      name: faker.internet.username(),
+      credit: faker.number.int({ min: 0, max: 100 }),
     };
 
     const mockCustomer = {
@@ -38,7 +39,7 @@ describe('CustomerAddCredit', () => {
     repositoryMock.search.mockResolvedValue([mockCustomerPrimitives]);
     repositoryMock.save.mockResolvedValue();
 
-    await customerAddCredit.run({ customerId: 'customer-id-1', creditToAdd: 50 });
+    await customerAddCredit.run({ customerId: mockCustomerPrimitives.customerId, creditToAdd: 50 });
 
     expect(repositoryMock.search).toHaveBeenCalledWith(
       expect.any(Criteria) // Assert the search criteria
