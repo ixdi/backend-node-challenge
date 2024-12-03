@@ -3,9 +3,9 @@ import { Server } from './server';
 export class BackendApp {
   server?: Server;
 
-  async start() {
-    const port = process.env.PORT || '5000';
-    this.server = new Server(port);
+  async start(port?: string) {
+    const _port = port || process.env.PORT || '5000';
+    this.server = new Server(_port);
     return this.server.listen();
   }
 
