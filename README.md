@@ -6,7 +6,7 @@
 
 Given the instructions in the [challenge](./challenge.md)
 
-The code is based on the template from CodelyTv for the DDD.
+The code is based on the CodelyTv DDD template.
 
 ## Setup
 
@@ -14,6 +14,12 @@ Install dependencies using pnpm (you can use npm or yarn):
 
 ```bash
 pnpm install
+```
+
+Add the environment variables in the `.env` file refering to a database in MongoDB:
+
+```bash
+MONGODB_URI=mongodb+srv://<user>:<password...
 ```
 
 Start localy the backend server:
