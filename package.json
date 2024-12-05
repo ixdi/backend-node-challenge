@@ -13,7 +13,9 @@
     "test:e2e": "playwright test",
     "test:e2e:report": "playwright show-report",
     "check-types": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "depcruise:validate": "depcruise --config .dependency-cruiser.cjs src",
+    "test:owasp": "owasp-dependency-check --project \"node-challenge\" -f HTML JSON --nvdApiKey b27c4434-10e7-43f8-b9d5-838e8ec36a57 -s './src/**/*' --exclude node_modules --exclude 'src/test*/**/*'"
   },
   "dependencies": {
     "@mongodb-js/zstd": "^1.2.2",
@@ -28,6 +30,7 @@
     "http-status": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.11.0",
+    "serverless-http": "^3.2.0",
     "uuid": "^11.0.3",
     "uuid-validate": "^0.0.3",
     "zod": "^3.23.8"
@@ -49,10 +52,13 @@
     "@types/supertest": "^6.0.2",
     "@types/uuid-validate": "^0.0.3",
     "@typescript-eslint/parser": "^8.16.0",
+    "dependency-cruiser": "^16.7.0",
     "eslint": "^9.15.0",
     "globals": "^15.12.0",
     "happy-dom": "^15.11.7",
     "husky": "^9.1.7",
+    "owasp-dependency-check": "^0.0.24",
+    "serverless-offline": "^14.3.4",
     "supertest": "^7.0.0",
     "tsx": "^4.19.2",
     "typescript": "5.7.2",
