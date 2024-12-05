@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import httpStatus from 'http-status';
 import { Controller } from '../../Controller';
 import { MongoClientFactory } from '@/contexts/Shared/infrastructure/persistence/mongo/MongoClient';
@@ -11,7 +11,7 @@ const customerSearchByIdSchema = z.object({
   customerId: z.string().uuid(),
 });
 
-class GetCustomerSearchByIdController implements Controller {
+export class GetCustomerSearchByIdController implements Controller {
   async run(req: Request, res: Response) {
     // 1. Validate data
     const customerId = req.body.customerId;
@@ -36,7 +36,7 @@ class GetCustomerSearchByIdController implements Controller {
     }
     // 4. Return
     res.status(httpStatus.OK).json(
-      customerPrimitives[0],
+      customerPrimitives.at(0),
     );
   }
 }

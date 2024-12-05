@@ -13,9 +13,10 @@ const customerCreateSchema = z.object({
   credit: z.number().optional(),
 });
 
-class PostCustomerCreateController implements Controller {
+export class PostCustomerCreateController implements Controller {
   async run(req: Request, res: Response) {
     console.log(req.body);
+    console.log(process.env.MONGODB_URI);
     // 1. Validate data
     const { name, credit } = req.body;
     const validation = customerCreateSchema.safeParse({ name, credit });

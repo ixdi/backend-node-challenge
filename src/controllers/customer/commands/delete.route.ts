@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import httpStatus from 'http-status';
 import { Controller } from '../../Controller';
 import { MongoClientFactory } from '@/contexts/Shared/infrastructure/persistence/mongo/MongoClient';
@@ -11,7 +11,7 @@ const customerDeleteSchema = z.object({
   customerId: z.string().uuid(),
 });
 
-class PostCustomerDeleteController implements Controller {
+export class PostCustomerDeleteController implements Controller {
   async run(req: Request, res: Response) {
     // 1. Validate data
     const { customerId } = req.body;

@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import httpStatus from 'http-status';
 import { Controller } from '../../Controller';
 import { MongoClientFactory } from '@/contexts/Shared/infrastructure/persistence/mongo/MongoClient';
@@ -10,7 +10,7 @@ import { CustomerSearchByCredit } from '@/contexts/Shop/customers/application/Se
 const customerSearchByCreditSchema = z.object({
 });
 
-class GetCustomerSearchByCreditController implements Controller {
+export class GetCustomerSearchByCreditController implements Controller {
   async run(req: Request, res: Response) {
     // 1. Validate data
     const body = req.body;

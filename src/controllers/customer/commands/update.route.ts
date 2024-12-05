@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import httpStatus from 'http-status';
 import { Controller } from '../../Controller';
 import { MongoClientFactory } from '@/contexts/Shared/infrastructure/persistence/mongo/MongoClient';
@@ -13,7 +13,7 @@ const customerUpdateSchema = z.object({
   credit: z.number().optional(),
 });
 
-class PostCustomerUpdateController implements Controller {
+export class PostCustomerUpdateController implements Controller {
   async run(req: Request, res: Response) {
     // 1. Validate data
     const { customerId, ...data } = req.body;

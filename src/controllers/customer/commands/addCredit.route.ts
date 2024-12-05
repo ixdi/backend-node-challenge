@@ -12,7 +12,7 @@ const customerAddCreditSchema = z.object({
   creditToAdd: z.number(),
 });
 
-class PostCustomerAddCreditController implements Controller {
+export class PostCustomerAddCreditController implements Controller {
   async run(req: Request, res: Response) {
     // 1. Validate data
     const { customerId, creditToAdd } = req.body;
