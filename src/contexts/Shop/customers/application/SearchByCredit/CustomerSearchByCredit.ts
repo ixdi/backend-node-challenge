@@ -6,7 +6,7 @@ import { Criteria } from '@Shared/domain/Criteria';
 export class CustomerSearchByCredit {
   constructor(private repository: CustomerRepository) { }
 
-  async run(): Promise<Primitives<Customer[]>> {
+  async run(): Promise<Primitives<Customer>[]> {
     const findCriteriaByCredit = new Criteria({
       filter: {},
       sort: { credit: 'desc' },

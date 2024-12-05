@@ -7,7 +7,7 @@ import { Criteria } from '@Shared/domain/Criteria';
 export class CustomerSearchById {
   constructor(private repository: CustomerRepository) { }
 
-  async run(params: { customerId: string }): Promise<Primitives<Customer[]>> {
+  async run(params: { customerId: string }): Promise<Primitives<Customer>[]> {
     const findCriteriaById = new Criteria({
       filter: { customerId: params.customerId, },
       limit: 1,
