@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import * as http from 'http';
 import httpStatus from 'http-status';
 import { registerRoutes } from '../controllers';
+import { getContainer } from '@/dependency-injection';
 
 export class Server {
   private app: express.Express;
@@ -21,27 +22,32 @@ export class Server {
     this.app.use(helmet.hidePoweredBy());
     this.app.use(helmet.frameguard({ action: 'deny' }));
     this.app.use(compress());
-    const router = Router();
-    this.app.use(router);
-
-    registerRoutes(router);
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    router.use((err: Error, req: Request, res: Response, next: () => void) => {
-      console.log(err);
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
-    });
   }
 
   async listen(): Promise<void> {
-    return new Promise(resolve => {
-      this.httpServer = this.app.listen(this.port, () => {
-        console.log(
-          `Backend App is running at http://localhost:${this.port} in ${this.app.get('env')} mode`
-        );
-        console.log('  Press CTRL-C to stop\n');
-        resolve();
+    await getContainer().then(() => {
+      const router = Router();
+      this.app.use(router);
+
+      registerRoutes(router);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      router.use((err: Error, req: Request, res: Response, next: () => void) => {
+        console.log(err);
+        res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
       });
+    }).then(() => {
+      return new Promise(resolve => {
+        this.httpServer = this.app.listen(this.port, () => {
+          console.log(
+            `Backend App is running at http://localhost:${this.port} in ${this.app.get('env')} mode`
+          );
+          console.log('  Press CTRL-C to stop\n');
+          resolve(null);
+        });
+      });
+    }).catch(error => {
+      console.error('Error starting server: ', error);
     });
   }
 
