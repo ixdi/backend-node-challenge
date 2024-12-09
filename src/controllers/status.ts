@@ -11,6 +11,10 @@ export class StatusGetController implements Controller {
 
 export const register = async (router: Router) => {
   console.log('Registering status controller');
-  const controllerStatus: StatusGetController = (await getContainer()).get('Shop.controllers.StatusGetController');
-  router.get('/status', (req: Request, res: Response) => controllerStatus.run(req, res));
+  router.get('/status', async (req: Request, res: Response) => {
+    console.log('Running status controller');
+    const container = await getContainer();
+    const controllerStatus: StatusGetController = container.get('Shop.controllers.StatusGetController');
+    return await controllerStatus.run(req, res)
+  });
 };

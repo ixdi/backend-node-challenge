@@ -1,13 +1,13 @@
-import { Express } from 'express';
+import { Router } from 'express';
 
 const routes = [
-  './status.route.ts',
-  './customers/commands/create.route.ts',
-  './customers/commands/update.route.ts',
-  './customers/commands/delete.route.ts',
-  './customers/commands/addCredit.route.ts',
-  './customers/queries/searchById.route.ts',
-  './customers/queries/searchByCredit.route.ts',
+  './status.ts',
+  './customers/commands/create.ts',
+  './customers/commands/update.ts',
+  './customers/commands/delete.ts',
+  './customers/commands/addCredit.ts',
+  './customers/queries/searchById.ts',
+  './customers/queries/searchByCredit.ts',
 ];
 
 export function registerRoutes(router: Router) {

@@ -5,8 +5,6 @@ import { z } from 'zod';
 import { CustomerCreate } from '@/contexts/Shop/customers/application/Create/CustomerCreate';
 import { CustomerId } from '@/contexts/Shop/Shared/domain/CustomerId';
 import { getContainer } from '@/dependency-injection';
-import { MongoCustomerRepository } from '@/contexts/Shop/customers/infrastructure/persistence/MongoCustomerRepository';
-import { MongoClientFactory } from '@/contexts/Shared/infrastructure/persistence/mongo/MongoClient';
 
 // Define validation schemas
 const customerCreateSchema = z.object({
@@ -42,9 +40,10 @@ export class PostCustomerCreateController implements Controller {
 
 export const register = async (router: Router) => {
   console.log('Registering customer create controller');
-  const mongoClient = await MongoClientFactory.createClient('motorbike', { url: process.env.MONGODB_URI || '' });
-  const customerRepository = new MongoCustomerRepository(mongoClient);
-  const customerCreate = new CustomerCreate(customerRepository);
-  const controllerCreate: PostCustomerCreateController = new PostCustomerCreateController(customerCreate);
-  router.post('/v1/customer/create', (req: Request, res: Response) => controllerCreate.run(req, res));
+  router.post('/v1/customer/create', async (req: Request, res: Response) => {
+    console.log('Running customer create controller');
+    const container = await getContainer();
+    const controllerCreate: PostCustomerCreateController = container.get('Shop.controllers.PostCustomerCreateController')
+    return await controllerCreate.run(req, res);
+  })
 };

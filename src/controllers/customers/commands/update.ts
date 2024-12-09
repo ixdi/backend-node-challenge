@@ -29,6 +29,10 @@ export class PostCustomerUpdateController implements Controller {
 
 export const register = async (router: Router) => {
   console.log('Registering customer update controller');
-  const controllerUpdate: PostCustomerUpdateController = (await getContainer()).get('Shop.controllers.PostCustomerUpdateController');
-  router.post('/v1/customer/update', (req: Request, res: Response) => controllerUpdate.run(req, res));
+  router.post('/v1/customer/update', async (req: Request, res: Response) => {
+    console.log('Running customer update controller');
+    const container = await getContainer();
+    const controllerUpdate: PostCustomerUpdateController = container.get('Shop.controllers.PostCustomerUpdateController');
+    return await controllerUpdate.run(req, res)
+  });
 };

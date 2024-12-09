@@ -35,6 +35,10 @@ export class GetCustomerSearchByIdController implements Controller {
 
 export const register = async (router: Router) => {
   console.log('Registering customer search by id controller');
-  const controllerSearchById: GetCustomerSearchByIdController = (await getContainer()).get('Shop.controllers.GetCustomerSearchByIdController');
-  router.get('/v1/customer/search', (req: Request, res: Response) => controllerSearchById.run(req, res));
+  router.post('/v1/customer/search', async (req: Request, res: Response) => {
+    console.log('Running customer search by id controller');
+    const container = await getContainer();
+    const controllerSearchById: GetCustomerSearchByIdController = container.get('Shop.controllers.GetCustomerSearchByIdController');
+    return await controllerSearchById.run(req, res)
+  });
 };

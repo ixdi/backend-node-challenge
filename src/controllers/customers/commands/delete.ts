@@ -30,6 +30,10 @@ export class PostCustomerDeleteController implements Controller {
 
 export const register = async (router: Router) => {
   console.log('Registering customer delete controller');
-  const controllerDelete: PostCustomerDeleteController = (await getContainer()).get('Shop.controllers.PostCustomerDeleteController');
-  router.post('/v1/customer/delete', (req: Request, res: Response) => controllerDelete.run(req, res));
+  router.post('/v1/customer/delete', async (req: Request, res: Response) => {
+    console.log('Running customer delete controller');
+    const container = await getContainer();
+    const controllerDelete: PostCustomerDeleteController = container.get('Shop.controllers.PostCustomerDeleteController');
+    return await controllerDelete.run(req, res)
+  });
 };

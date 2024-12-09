@@ -28,6 +28,10 @@ export class GetCustomerSearchByCreditController implements Controller {
 
 export const register = async (router: Router) => {
   console.log('Registering customer search by credit controller');
-  const controllerSearchByCredit: GetCustomerSearchByCreditController = (await getContainer()).get('Shop.controllers.GetCustomerSearchByCreditController');
-  router.get('/v1/customer/search-by-credit', (req: Request, res: Response) => controllerSearchByCredit.run(req, res));
+  router.get('/v1/customer/search-by-credit', async (req: Request, res: Response) => {
+    console.log('Running customer search by credit controller');
+    const container = await getContainer();
+    const controllerSearchByCredit: GetCustomerSearchByCreditController = container.get('Shop.controllers.GetCustomerSearchByCreditController');
+    return await controllerSearchByCredit.run(req, res)
+  });
 };

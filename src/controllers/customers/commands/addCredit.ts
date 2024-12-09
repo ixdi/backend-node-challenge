@@ -32,6 +32,10 @@ export class PostCustomerAddCreditController implements Controller {
 
 export const register = async (router: Router) => {
   console.log('Registering customer add credit controller');
-  const controllerAddCredit: PostCustomerAddCreditController = (await getContainer()).get('Shop.controllers.PostCustomerAddCreditController');
-  router.post('/v1/customer/add-credit', (req: Request, res: Response) => controllerAddCredit.run(req, res));
+  router.post('/v1/customer/add-credit', async (req: Request, res: Response) => {
+    console.log('Running customer add credit controller');
+    const container = await getContainer();
+    const controllerAddCredit: PostCustomerAddCreditController = container.get('Shop.controllers.PostCustomerAddCreditController');
+    return await controllerAddCredit.run(req, res)
+  });
 };
