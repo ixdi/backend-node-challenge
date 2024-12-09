@@ -33,6 +33,6 @@ export const register = async (router: Router) => {
     console.log('Running customer delete controller');
     const container = await getContainer();
     const controllerDelete: PostCustomerDeleteController = container.get('Shop.controllers.PostCustomerDeleteController');
-    return await controllerDelete.run(req, res)
+    await controllerDelete.run(req, res)
   });
 };

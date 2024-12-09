@@ -25,11 +25,11 @@ export class Server {
   }
 
   async listen(): Promise<void> {
-    await getContainer().then(() => {
+    await getContainer().then(async () => {
       const router = Router();
       this.app.use(router);
 
-      registerRoutes(router);
+      await registerRoutes(router);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       router.use((err: Error, req: Request, res: Response, next: () => void) => {

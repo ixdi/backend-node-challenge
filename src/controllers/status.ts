@@ -15,6 +15,6 @@ export const register = async (router: Router) => {
     console.log('Running status controller');
     const container = await getContainer();
     const controllerStatus: StatusGetController = container.get('Shop.controllers.StatusGetController');
-    return await controllerStatus.run(req, res)
+    await controllerStatus.run(req, res)
   });
 };

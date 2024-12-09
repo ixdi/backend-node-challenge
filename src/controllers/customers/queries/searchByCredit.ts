@@ -32,6 +32,6 @@ export const register = async (router: Router) => {
     console.log('Running customer search by credit controller');
     const container = await getContainer();
     const controllerSearchByCredit: GetCustomerSearchByCreditController = container.get('Shop.controllers.GetCustomerSearchByCreditController');
-    return await controllerSearchByCredit.run(req, res)
+    await controllerSearchByCredit.run(req, res)
   });
 };

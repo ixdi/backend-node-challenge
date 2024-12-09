@@ -39,6 +39,6 @@ export const register = async (router: Router) => {
     console.log('Running customer search by id controller');
     const container = await getContainer();
     const controllerSearchById: GetCustomerSearchByIdController = container.get('Shop.controllers.GetCustomerSearchByIdController');
-    return await controllerSearchById.run(req, res)
+    await controllerSearchById.run(req, res)
   });
 };

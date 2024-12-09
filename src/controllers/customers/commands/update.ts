@@ -33,6 +33,6 @@ export const register = async (router: Router) => {
     console.log('Running customer update controller');
     const container = await getContainer();
     const controllerUpdate: PostCustomerUpdateController = container.get('Shop.controllers.PostCustomerUpdateController');
-    return await controllerUpdate.run(req, res)
+    await controllerUpdate.run(req, res)
   });
 };

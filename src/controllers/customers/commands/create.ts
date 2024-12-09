@@ -40,6 +40,6 @@ export const register = async (router: Router) => {
     console.log('Running customer create controller');
     const container = await getContainer();
     const controllerCreate: PostCustomerCreateController = container.get('Shop.controllers.PostCustomerCreateController')
-    return await controllerCreate.run(req, res);
+    await controllerCreate.run(req, res);
   })
 };

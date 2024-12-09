@@ -10,8 +10,10 @@ const routes = [
   './customers/queries/searchByCredit.ts',
 ];
 
-export function registerRoutes(router: Router) {
-  routes.map((route: string) => register(route, router));
+export async function registerRoutes(router: Router) {
+  await Promise.all(
+    routes.map((route: string) => register(route, router))
+  );
 }
 
 async function register(routePath: string, router: Router) {
