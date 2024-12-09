@@ -10,8 +10,7 @@ export const getContainer = async () => {
   const loader = new YamlFileLoader(container);
   const env = process.env.NODE_ENV || 'dev';
 
-  // const dirname = __dirname;
-  const dirname = import.meta.dirname;
+  const dirname = import.meta.dirname || __dirname;
   const folder = `${dirname}/application_${env}.yml`
 
   await loader.load(folder);
