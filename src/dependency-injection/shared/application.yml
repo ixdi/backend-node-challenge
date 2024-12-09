@@ -1,17 +1,29 @@
 services:
 
+  Shared.MongoConfigFactory:
+    class: '../../contexts/Shared/infrastructure/persistence/mongo/MongoConfigFactory'
+    lazy: true
+
   Shared.MongoConfig:
     factory:
-      class: ../../contexts/Shared/infrastructure/persistence/mongo/MongoConfig
-      main: MongoConfigFactory
+      class: '@Shared.MongoConfigFactory'
       method: 'createConfig'
+    lazy: true
 
   Shared.domain.EventBus:
-    class: ../../contexts/Shared/infrastructure/EventBus/InMemory/InMemoryAsyncEventBus
+    class: '../../contexts/Shared/infrastructure/EventBus/InMemory/InMemoryAsyncEventBus'
     arguments: []
+    lazy: true
 
-  Shared.ConnectionManager:
+  Shared.MongoClientFactory:
+    class: '../../contexts/Shared/infrastructure/persistence/mongo/MongoClientFactory'
+    lazy: true
+
+  Shared.MongoClient:
     factory:
-      class: ../../contexts/Shared/infrastructure/persistence/mongo/MongoClient
+      class: '@Shared.MongoClientFactory'
       method: 'createClient'
-    arguments: ['shop', '@Shared.MongoConfig']
+    arguments:
+      - 'shop'
+      - '@Shared.MongoConfig'
+    lazy: true

@@ -1,35 +1,42 @@
 services:
 
   Shop.controllers.StatusGetController:
-    class: ../../controllers/status
-    main: StatusGetController
+    class: '../../controllers/status'
+    main: 'StatusGetController'
+    lazy: true
 
   Shop.controllers.PostCustomerCreateController:
-    class: ../../controllers/customers/commands/create
-    main: PostCustomerCreateController
+    class: '../../controllers/customers/commands/create'
+    main: 'PostCustomerCreateController'
     arguments: ['@Shop.Customers.application.CustomerCreate']
+    lazy: true
 
   Shop.controllers.PostCustomerDeleteController:
-    class: ../../controllers/customers/commands/delete
-    main: PostCustomerDeleteController
+    class: '../../controllers/customers/commands/delete'
+    main: 'PostCustomerDeleteController'
     arguments: ['@Shop.Customers.application.CustomerDelete']
+    lazy: true
 
   Shop.controllers.PostCustomerUpdateController:
-    class: ../../controllers/customers/commands/update
-    main: PostCustomerUpdateController
+    class: '../../controllers/customers/commands/update'
+    main: 'PostCustomerUpdateController'
     arguments: ['@Shop.Customers.application.CustomerUpdate']
+    lazy: true
 
   Shop.controllers.PostCustomerAddCreditController:
-    class: ../../controllers/customers/commands/addCredit
-    main: PostCustomerAddCreditController
+    class: '../../controllers/customers/commands/addCredit'
+    main: 'PostCustomerAddCreditController'
     arguments: ['@Shop.Customers.application.CustomerAddCredit']
+    lazy: true
 
   Shop.controllers.GetCustomerSearchByIdController:
-    class: ../../controllers/customers/queries/searchById
-    main: GetCustomerSearchByIdController
+    class: '../../controllers/customers/queries/searchById'
+    main: 'GetCustomerSearchByIdController'
     arguments: ['@Shop.Customers.application.CustomerSearchById']
+    lazy: true
 
   Shop.controllers.GetCustomerSearchByCreditController:
-    class: ../../controllers/customers/queries/searchByCredit
-    main: GetCustomerSearchByCreditController
+    class: '../../controllers/customers/queries/searchByCredit'
+    main: 'GetCustomerSearchByCreditController'
     arguments: ['@Shop.Customers.application.CustomerSearchByCredit']
+    lazy: true

@@ -1,29 +1,36 @@
 services:
 
   Shop.Customers.domain.CustomerRepository:
-    class: ../../../contexts/Shop/customers/infrastructure/persistence/MongoCustomerRepository
-    arguments: ['@Shared.ConnectionManager']
+    class: '../../../contexts/Shop/customers/infrastructure/persistence/MongoCustomerRepository'
+    arguments: ['@Shared.MongoClient']
+    lazy: true
 
   Shop.Customers.application.CustomerCreate:
-    class: ../../../contexts/Shop/customers/application/Create/CustomerCreate
+    class: '../../../contexts/Shop/customers/application/Create/CustomerCreate'
     arguments: ['@Shop.Customers.domain.CustomerRepository', '@Shared.domain.EventBus']
+    lazy: true
 
   Shop.Customers.application.CustomerDelete:
-    class: ../../../contexts/Shop/customers/application/Delete/CustomerDelete
+    class: '../../../contexts/Shop/customers/application/Delete/CustomerDelete'
     arguments: ['@Shop.Customers.domain.CustomerRepository', '@Shared.domain.EventBus']
+    lazy: true
 
   Shop.Customers.application.CustomerUpdate:
-    class: ../../../contexts/Shop/customers/application/Update/CustomerUpdate
+    class: '../../../contexts/Shop/customers/application/Update/CustomerUpdate'
     arguments: ['@Shop.Customers.domain.CustomerRepository', '@Shared.domain.EventBus']
+    lazy: true
 
   Shop.Customers.application.CustomerAddCredit:
-    class: ../../../contexts/Shop/customers/application/AddCredit/CustomerAddCredit
+    class: '../../../contexts/Shop/customers/application/AddCredit/CustomerAddCredit'
     arguments: ['@Shop.Customers.domain.CustomerRepository', '@Shared.domain.EventBus']
+    lazy: true
 
   Shop.Customers.application.CustomerSearchById:
-    class: ../../../contexts/Shop/customers/application/SearchById/CustomerSearchById
+    class: '../../../contexts/Shop/customers/application/SearchById/CustomerSearchById'
     arguments: ['@Shop.Customers.domain.CustomerRepository', '@Shared.domain.EventBus']
+    lazy: true
 
   Shop.Customers.application.CustomerSearchByCredit:
-    class: ../../../contexts/Shop/customers/application/SearchByCredit/CustomerSearchByCredit
+    class: '../../../contexts/Shop/customers/application/SearchByCredit/CustomerSearchByCredit'
     arguments: ['@Shop.Customers.domain.CustomerRepository', '@Shared.domain.EventBus']
+    lazy: true
