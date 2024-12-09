@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb';
-import MongoConfig from './MongoConfig';
+import { MongoConfig } from './MongoConfigFactory';
 
 export class MongoClientFactory {
   private static clients: { [key: string]: MongoClient } = {};
@@ -16,7 +16,7 @@ export class MongoClientFactory {
     return client;
   }
 
-  private static getClient(contextName: string): MongoClient | null {
+  private static getClient(contextName: string): MongoClient {
     return MongoClientFactory.clients[contextName];
   }
 

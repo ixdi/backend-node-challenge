@@ -4,16 +4,16 @@ import { Criteria } from '@Shared/domain/Criteria';
 import { Primitives } from '@Shared/domain/Primitives';
 
 export abstract class MongoRepository<T extends AggregateRoot> {
-  constructor(private _client: MongoClient) { }
+  constructor(private _client: Promise<MongoClient>) { }
 
   protected abstract collectionName(): string;
 
-  protected client(): MongoClient {
+  protected client(): Promise<MongoClient> {
     return this._client;
   }
 
   protected async collection(): Promise<Collection> {
-    return this._client.db().collection(this.collectionName());
+    return (await this._client).db().collection(this.collectionName());
   }
 
   protected async persist(criteria: Criteria, aggregateRoot: T): Promise<void> {

@@ -6,7 +6,7 @@ import { MongoClient } from 'mongodb';
 import { Primitives } from '@Shared/domain/Primitives';
 
 export class MongoCustomerRepository extends MongoRepository<Customer> implements CustomerRepository {
-  constructor(client: MongoClient) {
+  constructor(client: Promise<MongoClient>) {
     super(client);
   }
 
