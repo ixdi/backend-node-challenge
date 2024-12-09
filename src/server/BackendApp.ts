@@ -4,7 +4,7 @@ export class BackendApp {
   server?: Server;
 
   async start(port?: string) {
-    const _port = port || process.env.PORT || '5000';
+    const _port = port || process.env.PORT || '3000';
     this.server = new Server(_port);
     return await this.server.listen();
   }

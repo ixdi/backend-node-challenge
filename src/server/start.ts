@@ -11,5 +11,5 @@ try {
 
 process.on('uncaughtException', err => {
   console.log('uncaughtException', err);
-  //process.exit(1);
+  process.exit(1);
 });
