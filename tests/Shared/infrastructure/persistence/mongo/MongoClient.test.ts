@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MongoClient } from 'mongodb';
-import { MongoClientFactory } from '@Shared/infrastructure/persistence/mongo/MongoClient';
+import { MongoClientFactory } from '@Shared/infrastructure/persistence/mongo/MongoClientFactory';
 
 // Mock MongoClient
 vi.mock('mongodb', () => {
