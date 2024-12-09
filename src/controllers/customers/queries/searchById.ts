@@ -1,10 +1,9 @@
 import { Request, Response, Router } from 'express';
 import httpStatus from 'http-status';
 import { Controller } from '../../Controller';
-import { MongoClientFactory } from '@/contexts/Shared/infrastructure/persistence/mongo/MongoClient';
-import { MongoCustomerRepository } from '@/contexts/Shop/customers/infrastructure/persistence/MongoCustomerRepository';
 import { z } from 'zod';
 import { CustomerSearchById } from '@/contexts/Shop/customers/application/SearchById/CustomerSearchById';
+import { getContainer } from '@/dependency-injection';
 
 // Define validation schemas
 const customerSearchByIdSchema = z.object({
@@ -12,36 +11,30 @@ const customerSearchByIdSchema = z.object({
 });
 
 export class GetCustomerSearchByIdController implements Controller {
+  constructor(private customerSearchById: CustomerSearchById) { }
+
   async run(req: Request, res: Response) {
-    // 1. Validate data
     const customerId = req.body.customerId;
     const validation = customerSearchByIdSchema.safeParse({ customerId });
     if (!validation.success) {
       res.status(httpStatus.BAD_REQUEST).send(validation.error);
       return;
     }
-    // 2. Create connection
-    const connection = await MongoClientFactory.createClient('motorbikeshop', {
-      url: process.env.MONGODB_URI || '',
-    });
-    const customerRepository = new MongoCustomerRepository(connection);
-    // 3. Run use case
-    const customerSearchById = new CustomerSearchById(customerRepository);
-    const customerPrimitives = await customerSearchById.run({
+    const customerPrimitives = await this.customerSearchById.run({
       customerId,
     });
     if (!customerPrimitives.length) {
       res.status(httpStatus.NOT_FOUND).send();
       return
     }
-    // 4. Return
     res.status(httpStatus.OK).json(
       customerPrimitives.at(0),
     );
   }
 }
 
-export const register = (router: Router) => {
-  const controller = new GetCustomerSearchByIdController();
-  router.get('/v1/customer/search', (req: Request, res: Response) => controller.run(req, res));
+export const register = async (router: Router) => {
+  console.log('Registering customer search by id controller');
+  const controllerSearchById: GetCustomerSearchByIdController = (await getContainer()).get('Shop.controllers.GetCustomerSearchByIdController');
+  router.get('/v1/customer/search', (req: Request, res: Response) => controllerSearchById.run(req, res));
 };

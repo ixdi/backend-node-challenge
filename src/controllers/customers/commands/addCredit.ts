@@ -1,10 +1,9 @@
 import { Router, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { Controller } from '../../Controller';
-import { MongoClientFactory } from '@/contexts/Shared/infrastructure/persistence/mongo/MongoClient';
-import { MongoCustomerRepository } from '@/contexts/Shop/customers/infrastructure/persistence/MongoCustomerRepository';
 import { z } from 'zod';
 import { CustomerAddCredit } from '@/contexts/Shop/customers/application/AddCredit/CustomerAddCredit';
+import { getContainer } from '@/dependency-injection';
 
 // Define validation schemas
 const customerAddCreditSchema = z.object({
@@ -13,22 +12,16 @@ const customerAddCreditSchema = z.object({
 });
 
 export class PostCustomerAddCreditController implements Controller {
+  constructor(private customerAddCredit: CustomerAddCredit) { }
+
   async run(req: Request, res: Response) {
-    // 1. Validate data
     const { customerId, creditToAdd } = req.body;
     const validation = customerAddCreditSchema.safeParse({ customerId, creditToAdd });
     if (!validation.success) {
       res.status(httpStatus.BAD_REQUEST).send(validation.error);
       return;
     }
-    // 2. Create connection
-    const connection = await MongoClientFactory.createClient('motorbikeshop', {
-      url: process.env.MONGODB_URI || '',
-    });
-    const customerRepository = new MongoCustomerRepository(connection);
-    // 3. Run use case
-    const customerAddCredit = new CustomerAddCredit(customerRepository);
-    await customerAddCredit.run({
+    await this.customerAddCredit.run({
       customerId,
       creditToAdd,
     });
@@ -37,7 +30,8 @@ export class PostCustomerAddCreditController implements Controller {
   }
 }
 
-export const register = (router: Router) => {
-  const controller = new PostCustomerAddCreditController();
-  router.post('/v1/customer/add-credit', (req: Request, res: Response) => controller.run(req, res));
+export const register = async (router: Router) => {
+  console.log('Registering customer add credit controller');
+  const controllerAddCredit: PostCustomerAddCreditController = (await getContainer()).get('Shop.controllers.PostCustomerAddCreditController');
+  router.post('/v1/customer/add-credit', (req: Request, res: Response) => controllerAddCredit.run(req, res));
 };

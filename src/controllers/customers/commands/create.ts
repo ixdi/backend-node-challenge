@@ -1,11 +1,12 @@
 import { Router, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { Controller } from '../../Controller';
-import { MongoClientFactory } from '@/contexts/Shared/infrastructure/persistence/mongo/MongoClient';
-import { MongoCustomerRepository } from '@/contexts/Shop/customers/infrastructure/persistence/MongoCustomerRepository';
 import { z } from 'zod';
 import { CustomerCreate } from '@/contexts/Shop/customers/application/Create/CustomerCreate';
 import { CustomerId } from '@/contexts/Shop/Shared/domain/CustomerId';
+import { getContainer } from '@/dependency-injection';
+import { MongoCustomerRepository } from '@/contexts/Shop/customers/infrastructure/persistence/MongoCustomerRepository';
+import { MongoClientFactory } from '@/contexts/Shared/infrastructure/persistence/mongo/MongoClient';
 
 // Define validation schemas
 const customerCreateSchema = z.object({
@@ -14,6 +15,8 @@ const customerCreateSchema = z.object({
 });
 
 export class PostCustomerCreateController implements Controller {
+  constructor(private customerCreate: CustomerCreate) { }
+
   async run(req: Request, res: Response) {
     console.log(req.body);
     console.log(process.env.MONGODB_URI);
@@ -24,15 +27,8 @@ export class PostCustomerCreateController implements Controller {
       res.status(httpStatus.BAD_REQUEST).send(validation.error);
       return;
     }
-    // 2. Create connection
-    const connection = await MongoClientFactory.createClient('motorbikeshop', {
-      url: process.env.MONGODB_URI || '',
-    });
-    const customerRepository = new MongoCustomerRepository(connection);
-    // 3. Run use case
-    const customerCreate = new CustomerCreate(customerRepository);
     const customerId = CustomerId.random().value;
-    await customerCreate.run({
+    await this.customerCreate.run({
       customerId,
       name,
       credit,
@@ -44,7 +40,11 @@ export class PostCustomerCreateController implements Controller {
   }
 }
 
-export const register = (router: Router) => {
-  const controller = new PostCustomerCreateController();
-  router.post('/v1/customer/create', (req: Request, res: Response) => controller.run(req, res));
+export const register = async (router: Router) => {
+  console.log('Registering customer create controller');
+  const mongoClient = await MongoClientFactory.createClient('motorbike', { url: process.env.MONGODB_URI || '' });
+  const customerRepository = new MongoCustomerRepository(mongoClient);
+  const customerCreate = new CustomerCreate(customerRepository);
+  const controllerCreate: PostCustomerCreateController = new PostCustomerCreateController(customerCreate);
+  router.post('/v1/customer/create', (req: Request, res: Response) => controllerCreate.run(req, res));
 };
