@@ -24,43 +24,43 @@ app.use(compress());
 app.get('/status', async (req, res) => {
   const container = await getContainer();
   const controllerStatus: StatusGetController = container.get('Shop.controllers.StatusGetController');
-  return await controllerStatus.run(req, res);
+  await controllerStatus.run(req, res);
 })
 
 app.post('/v1/customer/create', async (req, res) => {
   const container = await getContainer();
   const controllerCreate: PostCustomerCreateController = container.get('Shop.controllers.PostCustomerCreateController');
-  return await controllerCreate.run(req, res)
+  await controllerCreate.run(req, res)
 });
 
 app.post('/v1/customer/delete', async (req, res) => {
   const container = await getContainer();
   const controllerDelete: PostCustomerDeleteController = container.get('Shop.controllers.PostCustomerDeleteController');
-  return await controllerDelete.run(req, res);
+  await controllerDelete.run(req, res);
 });
 
 app.post('/v1/customer/update', async (req, res) => {
   const container = await getContainer();
   const controllerUpdate: PostCustomerUpdateController = container.get('Shop.controllers.PostCustomerUpdateController');
-  return await controllerUpdate.run(req, res)
+  await controllerUpdate.run(req, res)
 });
 
 app.post('/v1/customer/update', async (req, res) => {
   const container = await getContainer();
   const controllerAddCredit: PostCustomerAddCreditController = container.get('Shop.controllers.PostCustomerAddCreditController');
-  return await controllerAddCredit.run(req, res)
+  await controllerAddCredit.run(req, res)
 });
 
 app.get('/v1/customer/search', async (req, res) => {
   const container = await getContainer();
   const controllerSearchById: GetCustomerSearchByIdController = container.get('Shop.controllers.GetCustomerSearchByIdController');
-  return await controllerSearchById.run(req, res);
+  await controllerSearchById.run(req, res);
 });
 
 app.get('/v1/customer/search-by-credit', async (req, res) => {
   const container = await getContainer();
   const controllerSearchByCredit: GetCustomerSearchByCreditController = container.get('Shop.controllers.GetCustomerSearchByCreditController');
-  return await controllerSearchByCredit.run(req, res)
+  await controllerSearchByCredit.run(req, res)
 });
 
 exports.handler = serverless(app)
