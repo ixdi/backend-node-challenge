@@ -1,0 +1,35 @@
+services:
+
+  Shop.controllers.StatusGetController:
+    class: ../../controllers/status
+    main: StatusGetController
+
+  Shop.controllers.PostCustomerCreateController:
+    class: ../../controllers/customers/commands/create
+    main: PostCustomerCreateController
+    arguments: ['@Shop.Customers.application.CustomerCreate']
+
+  Shop.controllers.PostCustomerDeleteController:
+    class: ../../controllers/customers/commands/delete
+    main: PostCustomerDeleteController
+    arguments: ['@Shop.Customers.application.CustomerDelete']
+
+  Shop.controllers.PostCustomerUpdateController:
+    class: ../../controllers/customers/commands/update
+    main: PostCustomerUpdateController
+    arguments: ['@Shop.Customers.application.CustomerUpdate']
+
+  Shop.controllers.PostCustomerAddCreditController:
+    class: ../../controllers/customers/commands/addCredit
+    main: PostCustomerAddCreditController
+    arguments: ['@Shop.Customers.application.CustomerAddCredit']
+
+  Shop.controllers.GetCustomerSearchByIdController:
+    class: ../../controllers/customers/queries/searchById
+    main: GetCustomerSearchByIdController
+    arguments: ['@Shop.Customers.application.CustomerSearchById']
+
+  Shop.controllers.GetCustomerSearchByCreditController:
+    class: ../../controllers/customers/queries/searchByCredit
+    main: GetCustomerSearchByCreditController
+    arguments: ['@Shop.Customers.application.CustomerSearchByCredit']

@@ -1,0 +1,17 @@
+services:
+
+  Shared.MongoConfig:
+    factory:
+      class: ../../contexts/Shared/infrastructure/persistence/mongo/MongoConfig
+      main: MongoConfigFactory
+      method: 'createConfig'
+
+  Shared.domain.EventBus:
+    class: ../../contexts/Shared/infrastructure/EventBus/InMemory/InMemoryAsyncEventBus
+    arguments: []
+
+  Shared.ConnectionManager:
+    factory:
+      class: ../../contexts/Shared/infrastructure/persistence/mongo/MongoClient
+      method: 'createClient'
+    arguments: ['shop', '@Shared.MongoConfig']
