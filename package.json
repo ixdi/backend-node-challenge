@@ -10,7 +10,7 @@
     "lint": "lint",
     "test": "dotenvx run --env-file=.env.test -- vitest",
     "test:single": "dotenvx run --env-file=.env.test -- vitest run",
-    "test:e2e": "dotenvx run --env-file=.env.test -- playwright test",
+    "test:e2e": "dotenvx run --env-file=.env.test -- playwright test --workers=1",
     "test:e2e:report": "dotenvx run --env-file=.env.test -- playwright show-report",
     "check-types": "tsc --noEmit",
     "prepare": "husky",
