@@ -1,7 +1,8 @@
-import 'dotenv/config'
+import { config } from '@dotenvx/dotenvx';
 import { BackendApp } from './BackendApp';
 
 try {
+  config();
   new BackendApp().start();
 } catch (e) {
   console.log(e);
