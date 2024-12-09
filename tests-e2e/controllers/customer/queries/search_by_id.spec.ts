@@ -4,7 +4,7 @@ import { test, expect } from "@playwright/test";
 let customerId: string;
 
 test.beforeEach(async ({ page }) => {
-  const response = await page.request.post('http://localhost:5000/v1/customer/create', {
+  const response = await page.request.post(`http://localhost:${process.env.PORT}/v1/customer/create`, {
     data: {
       name: faker.internet.username(),
     },
@@ -12,18 +12,19 @@ test.beforeEach(async ({ page }) => {
   customerId = (await response.json()).customerId;
 });
 
-test('PostCustomerAddCredit', async ({ page }) => {
-  const response = await page.request.post('http://localhost:5000/v1/customer/add-credit', {
+test('GetCustomerSearchById', async ({ page }) => {
+  const response = await page.request.post(`http://localhost:${process.env.PORT}/v1/customer/search`, {
     data: {
       customerId: customerId,
-      creditToAdd: 100,
     },
   })
+  const data = await response.json();
   await expect(response).toBeOK();
+  expect(data.customerId).toEqual(customerId);
 });
 
 test.afterEach(async ({ page }) => {
-  const response = await page.request.post('http://localhost:5000/v1/customer/delete', {
+  const response = await page.request.post(`http://localhost:${process.env.PORT}/v1/customer/delete`, {
     data: {
       customerId: customerId,
     },

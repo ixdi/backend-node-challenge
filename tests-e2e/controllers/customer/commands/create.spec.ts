@@ -4,7 +4,7 @@ import { test, expect } from "@playwright/test";
 let customerId: string;
 
 test('PostCustomerCreate', async ({ page }) => {
-  const response = await page.request.post('http://localhost:5000/v1/customer/create', {
+  const response = await page.request.post(`http://localhost:${process.env.PORT}/v1/customer/create`, {
     data: {
       name: faker.internet.username(),
     },
@@ -15,7 +15,7 @@ test('PostCustomerCreate', async ({ page }) => {
 });
 
 test.afterEach(async ({ page }) => {
-  const response = await page.request.post('http://localhost:5000/v1/customer/delete', {
+  const response = await page.request.post(`http://localhost:${process.env.PORT}/v1/customer/delete`, {
     data: {
       customerId: customerId,
     },
