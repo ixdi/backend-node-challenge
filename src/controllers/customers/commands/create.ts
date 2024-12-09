@@ -28,7 +28,6 @@ export class PostCustomerCreateController implements Controller {
       name,
       credit,
     });
-    // 4. Return customerId
     res.status(httpStatus.OK).json({
       customerId,
     });

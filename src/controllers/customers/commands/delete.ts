@@ -23,7 +23,6 @@ export class PostCustomerDeleteController implements Controller {
     await this.customerDelete.run({
       customerId,
     });
-    // 4. Return
     res.status(httpStatus.OK).json({});
   }
 }
