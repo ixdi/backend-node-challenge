@@ -13,12 +13,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('GetCustomerSearchByCredit', async ({ page }) => {
-  const response = await page.request.get(`http://localhost:${process.env.PORT}/v1/customer/search-by-credit`, {
-    data: {
-    },
-  })
-  const data = await response.json();
+  const response = await page.request.get(`http://localhost:${process.env.PORT}/v1/customer/search-by-credit`)
   await expect(response).toBeOK();
+  const data = await response.json();
   expect(data.customers.length).toBe(1);
 });
 
