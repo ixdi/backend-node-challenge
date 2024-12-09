@@ -30,7 +30,7 @@ export class MongoClientFactory {
         minPoolSize: 1,
         maxPoolSize: 40,
         maxConnecting: 5,
-        tls: process.env.PRODUCTION === 'true',
+        tls: process.env.NODE_ENV === 'production',
       });
 
       await client.connect();

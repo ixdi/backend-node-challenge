@@ -23,19 +23,19 @@ This template configures a single function, `api`, which is responsible for hand
 
 Install dependencies with:
 
-```
+```bash
 npm install
 ```
 
 and then deploy with:
 
-```
+```bash
 serverless deploy
 ```
 
 After running deploy, you should see output similar to:
 
-```
+```bash
 Deploying "aws-node-express-api" to stage "dev" (us-east-1)
 
 ✔ Service deployed to stack aws-node-express-api-dev (96s)
@@ -51,7 +51,7 @@ _Note_: In current form, after deployment, your API is public and can be invoked
 
 After successful deployment, you can call the created application via HTTP:
 
-```
+```bash
 curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
 ```
 
@@ -65,12 +65,12 @@ Which should result in the following response:
 
 The easiest way to develop and test your function is to use the `dev` command:
 
-```
+```bash
 serverless dev
 ```
 
 This will start a local emulator of AWS Lambda and tunnel your requests to and from AWS Lambda, allowing you to interact with your function as if it were running in the cloud.
 
-Now you can invoke the function as before, but this time the function will be executed locally. Now you can develop your function locally, invoke it, and see the results immediately without having to re-deploy.
+Now you can invoke the function as before, but this time the function will execute locally. Now you can develop your function locally, invoke it, and see the results immediately without having to re-deploy.
 
 When you are done developing, don't forget to run `serverless deploy` to deploy the function to the cloud.

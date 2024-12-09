@@ -15,7 +15,8 @@ functions:
     events:
       - httpApi: "*"
     environment:
-      MONGODB_URI: ${ssm:/aws/reference/secretsmanager/taxdown/mongodb}
+      #MONGODB_URI: ${ssm:/aws/reference/secretsmanager/taxdown/mongodb}
+      MONGODB_URI: mongodb://localhost:27017/motorbikesshop
 
 plugins:
   - serverless-offline

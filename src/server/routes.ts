@@ -3,6 +3,7 @@ import compress from 'compression';
 import express from 'express';
 import helmet from 'helmet';
 import serverless from 'serverless-http';
+<<<<<<< HEAD
 import container from '../dependency-injection';
 import { StatusGetController } from '@/controllers/status';
 import { PostCustomerDeleteController } from '@/controllers/customers/commands/delete';
@@ -11,6 +12,15 @@ import { PostCustomerUpdateController } from '@/controllers/customers/commands/u
 import { PostCustomerAddCreditController } from '@/controllers/customers/commands/addCredit';
 import { GetCustomerSearchByIdController } from '@/controllers/customers/queries/searchById';
 import { GetCustomerSearchByCreditController } from '@/controllers/customers/queries/searchByCredit';
+=======
+import { StatusGetController } from '../controllers/status.route';
+import { PostCustomerCreateController } from '@/controllers/customers/commands/create.route';
+import { PostCustomerDeleteController } from '@/controllers/customers/commands/delete.route';
+import { PostCustomerUpdateController } from '@/controllers/customers/commands/update.route';
+import { GetCustomerSearchByCreditController } from '@/controllers/customers/queries/searchByCredit.route';
+import { GetCustomerSearchByIdController } from '@/controllers/customers/queries/searchById.route';
+import { PostCustomerAddCreditController } from '@/controllers/customers/commands/addCredit.route';
+>>>>>>> main
 
 const app = express();
 app.use(bodyParser.json());
@@ -29,6 +39,7 @@ app.get('/status', (req, res) => {
 const controllerCreate: PostCustomerCreateController = container.get('Shop.controllers.PostCustomerCreateController');
 app.post('/v1/customer/create', (req, res) => controllerCreate.run(req, res));
 
+<<<<<<< HEAD
 const controllerDelete: PostCustomerDeleteController = container.get('Shop.controllers.PostCustomerDeleteController');
 app.post('/v1/customer/delete', (req, res) => controllerDelete.run(req, res));
 
@@ -42,6 +53,21 @@ const controllerSearchById: GetCustomerSearchByIdController = container.get('Sho
 app.get('/v1/customer/search', (req, res) => controllerSearchById.run(req, res));
 
 const controllerSearchByCredit: GetCustomerSearchByCreditController = container.get('Shop.controllers.GetCustomerSearchByCreditController');
+=======
+const controllerDelete = new PostCustomerDeleteController();
+app.post('/v1/customer/delete', (req, res) => controllerDelete.run(req, res));
+
+const controllerUpdate = new PostCustomerUpdateController();
+app.post('/v1/customer/update', (req, res) => controllerUpdate.run(req, res));
+
+const controllerAddCredit = new PostCustomerAddCreditController();
+app.post('/v1/customer/add-credit', (req, res) => controllerAddCredit.run(req, res));
+
+const controllerSearchById = new GetCustomerSearchByIdController();
+app.post('/v1/customer/search', (req, res) => controllerSearchById.run(req, res));
+
+const controllerSearchByCredit = new GetCustomerSearchByCreditController();
+>>>>>>> main
 app.get('/v1/customer/search-by-credit', (req, res) => controllerSearchByCredit.run(req, res));
 
 exports.handler = serverless(app)

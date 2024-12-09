@@ -7,7 +7,6 @@ test.beforeEach(async ({ page }) => {
   const response = await page.request.post('http://localhost:5000/v1/customer/create', {
     data: {
       name: faker.internet.username(),
-      email: faker.internet.email(),
     },
   })
   customerId = (await response.json()).customerId;

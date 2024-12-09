@@ -31,6 +31,7 @@ describe('CustomerSearchByCredit', () => {
       new Criteria({
         filter: {},
         sort: { credit: 'desc' },
+        limit: 100,
       })
     );
     expect(result).toEqual(mockCustomerPrimitives);
@@ -46,6 +47,7 @@ describe('CustomerSearchByCredit', () => {
       new Criteria({
         filter: {},
         sort: { credit: 'desc' },
+        limit: 100,
       })
     );
     expect(result).toEqual([]);
@@ -61,6 +63,7 @@ describe('CustomerSearchByCredit', () => {
       new Criteria({
         filter: {},
         sort: { credit: 'desc' },
+        limit: 100,
       })
     );
   });
