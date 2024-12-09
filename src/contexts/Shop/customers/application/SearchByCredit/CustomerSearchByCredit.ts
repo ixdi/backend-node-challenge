@@ -10,6 +10,7 @@ export class CustomerSearchByCredit {
     const findCriteriaByCredit = new Criteria({
       filter: {},
       sort: { credit: 'desc' },
+      limit: 100,
     });
     return await this.repository.search(findCriteriaByCredit);
   }
