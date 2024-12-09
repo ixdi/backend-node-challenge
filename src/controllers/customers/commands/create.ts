@@ -16,9 +16,6 @@ export class PostCustomerCreateController implements Controller {
   constructor(private customerCreate: CustomerCreate) { }
 
   async run(req: Request, res: Response) {
-    console.log(req.body);
-    console.log(process.env.MONGODB_URI);
-    // 1. Validate data
     const { name, credit } = req.body;
     const validation = customerCreateSchema.safeParse({ name, credit });
     if (!validation.success) {
